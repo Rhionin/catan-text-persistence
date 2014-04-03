@@ -10,22 +10,22 @@ var TextUserStore = (function() {
 	function TextUserStore(){
 	}
 
-	TextUserStore.prototype.addUser = function(user, password){
-		if(!this.canAddUser(user))
-			throw Error("User " + user + " already exists.");
+	TextUserStore.prototype.addUser = function(userName, password){
+		if(!this.canAddUser(userName))
+			throw Error("User " + userName + " already exists.");
 
 		var userList = this.getUserList();
 		var userId = getNextUserId();
-		userList.push({name:user, password:password, playerID:userId});
+		userList.push({name:userName, password:password, playerID:userId});
 
 		writeUserList(userList);
 
 		return userId;
 	}
 
-	TextUserStore.prototype.getUserById = function(id){
-		userList = this.getUserList()
-		return userList[id];
+	TextUserStore.prototype.deleteUser = function(id){
+		userList = this.getUserList();
+		//delete user
 	}
 
 	TextUserStore.prototype.getUserByName = function(name){

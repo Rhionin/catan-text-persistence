@@ -10,31 +10,35 @@ var TextGameStore = (function() {
 	function TextGameStore(){
 	}
 
-	TextGameStore.prototype.addModel = function(model) {
-		var modelJson = model.toJSON();
+	//gameId is optional. Used when adding a checkpoint
+	TextGameStore.prototype.addModel = function(modelJson, gameId) {
+		/* REFACTOR
 		var files = fs.readdirSync(model_folder);
 		name = ("00"+(files.length - 1)).slice(-4);
 
 		file_name = path.join(model_folder, name + file_extension);
 
 		fs.writeFileSync(file_name, JSON.stringify(modelJson, null, "\t")); 
+		*/
+
+		return id;
 	}
 
-	TextGameStore.prototype.getModel = function(name) {
+	TextGameStore.prototype.getModel = function(gameId) {
+	 	/* REFACTOR
 	 	file_name = getModelFileName(name);
 
-	 	var model = null;
+	 	var modelJson = null;
 	 	if(fs.existsSync(file_name))
 	    {
 	    	var modelJson = fs.readFileSync(file_name, 'utf8');
-	    	model = new ServerModelClass.ServerModel();
-	    	model.fromJSON(modelJson);
 	    }
-
-       	return model;
+		*/
+       	return modelJson;
 	}
 
-	TextGameStore.prototype.removeModel = function(name) {
+	TextGameStore.prototype.removeModel = function(id) {
+		/* REFACTOR
 		file_name = getModelFileName(name);
 		fs.exists(file_name, function(exists) {
 			if (exists)
@@ -47,9 +51,18 @@ var TextGameStore = (function() {
 				console.log("File not found: " + file_name);
 			}
 		});
+		*/
+	}
+
+	TextGameStore.prototype.getCheckpoint = function(id)
+	{
+		var modelJson = null;
+
+		return modelJson;
 	}
 
 	TextGameStore.prototype.initialize = function() {
+		/* REFACTOR
 		console.log("\nINITIALIZING DATA STORE");
 		var models = [];
 		files = fs.readdirSync(model_folder);
@@ -74,7 +87,7 @@ var TextGameStore = (function() {
 		});
 
 		console.log("Model files loaded:", filesLoaded);
-
+		*/
 		return models
 	}
 
