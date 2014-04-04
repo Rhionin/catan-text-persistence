@@ -15,7 +15,7 @@
         POST: none
     </pre>
 
-    @class factory
+    @class Textfactory
     @constructor    
 */
 
