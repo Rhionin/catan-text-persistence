@@ -1,3 +1,24 @@
+/**
+    A factory for the text based DAO classes
+    <pre>
+
+    Domain:
+        commands {TextCommandStore}
+        game {TextGameStore}
+        user {TextUserStore}
+
+    Invariants:
+        INVARIANT: none
+
+    Constructor Specification:
+        PRE: none
+        POST: none
+    </pre>
+
+    @class Deck
+    @constructor    
+*/
+
 var _ = require("underscore"),
 	commands = require("./lib/TextCommandStore"),
 	game = require("./lib/TextGameStore"),
