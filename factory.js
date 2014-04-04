@@ -15,7 +15,7 @@
         POST: none
     </pre>
 
-    @class Deck
+    @class factory
     @constructor    
 */
 
