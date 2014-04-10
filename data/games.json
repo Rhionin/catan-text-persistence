@@ -4,7 +4,8 @@
 		{
 			"id": 0,
 			"title": "Sample game [setup phase]",
-			"model": {
+			"checkpoints": [
+				{
 				"deck": {
 					"soldier": 14,
 					"yearOfPlenty": 2,
@@ -3354,12 +3355,14 @@
 				"longestRoad": -1,
 				"winner": -1,
 				"revision": 0
-			}
+				}
+			]
 		},
 		{
 			"id": 1,
 			"title": "Sample game [gameplay phase]",
-			"model": {
+			"checkpoints": [
+				{
 			  "title": "Sample game [gameplay phase]",
 			  "deck": {
 			    "soldier": 14,
@@ -6811,7 +6814,8 @@
 			  "longestRoad": -1,
 			  "winner": -1,
 			  "revision": 0
-			}
+				}
+			]
 		}
 	]
 }
