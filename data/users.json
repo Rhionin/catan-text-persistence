@@ -1,0 +1,25 @@
+{
+	"nextId": 4,
+	"users": [
+		{
+			"name": "Sam",
+			"password": "sam",
+			"playerID": 0
+		},
+		{
+			"name": "Brooke",
+			"password": "brooke",
+			"playerID": 1
+		},
+		{
+			"name": "Pete",
+			"password": "pete",
+			"playerID": 2
+		},
+		{
+			"name": "Mark",
+			"password": "mark",
+			"playerID": 3
+		}
+	]
+}
