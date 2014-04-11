@@ -20,6 +20,9 @@
 */
 
 var _ = require("underscore"),
+	rmdir = require('rimraf'),
+	path = require('path'),
+	fs = require('fs-extra'),
 	commands = require("./lib/TextCommandStore"),
 	game = require("./lib/TextGameStore"),
 	user = require("./lib/TextUserStore");
@@ -29,6 +32,8 @@ var gameStore = new game.TextGameStore();
 var userStore = new user.TextUserStore();
 
 _.extend(exports, {
+	dataFolder: path.resolve('./data'),
+
 	/**
 	 * [returns an instance of the text persistence command DAO]
 	 * <pre>
@@ -83,5 +88,34 @@ _.extend(exports, {
 	getUserStore: function()
 	{
 		return userStore;
+	},
+	/**
+	 * [wipes all data from the text persistence store]
+	 *
+	 * 	    Domain: None
+	      
+	    Invariants:
+	        INVARIANT: None
+	    
+	    	PRE: None
+	    	POST: All persistent user, command and game data is erased.
+	    </pre>
+	 * @method clean
+	 */
+ 	clean: function(done)
+	{
+		rmdir(exports.dataFolder, function(err) {
+			if(err)
+			{
+				console.log(err);
+			}
+			else
+			{
+				console.log("Persistent text data cleared");
+				fs.mkdir(exports.dataFolder);
+			}
+
+			done();
+		});
 	}
 });
