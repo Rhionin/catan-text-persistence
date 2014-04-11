@@ -12,7 +12,9 @@
 		"url": "git://github.com/Rhionin/catan-text-persistence.git"
 	},
 	"dependencies": {
-		"underscore": "1.x"
+		"underscore": "1.x",
+    "fs-extra": "0.x",
+    "rimraf": "2.x"
 	},
 	"devDependencies": {
 		"mocha": "1.x"
