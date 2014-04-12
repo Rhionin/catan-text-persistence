@@ -54,7 +54,7 @@ describe("Text Game Store", function() {
 
 			gameStore.updateGame(updatedGame, function(changes){
 				assert.equal(changes, 1, "updateGame: Expected 1 change, got " + changes);
-console.log(id);
+
 				gameStore.getGame(id, true, function(game){
 					assert.equal(game.id, sampleId, "getGame: incorrect id");
 					assert.equal(game.title, updatedTitle, "getGame: incorrect title");
