@@ -4,13 +4,23 @@ var _ = require('underscore'),
 	TextGameStore = require('../lib/TextGameStore.js');
 
 describe("Text Game Store", function() {
-	var gameTitle = "Test Game";
 	var gameFilePath = "./test/tmp_games.json";
-	var sampleModel = {some:"stuff", goes:"here"};
+
+	var sampleId;
+	var sampleTitle;
+	var sampleModel;
+	var sampleGame;
+
 	var gameStore;
 
 	beforeEach(function(done) {
 		gameStore = new TextGameStore.TextGameStore(gameFilePath);
+
+		sampleId = 0;
+		sampleTitle = "Test Game";
+		sampleModel = {some:"stuff", goes:"here"};
+		sampleGame = {id:sampleId, title:sampleTitle, model:sampleModel};
+
 		done();
 	});
 
@@ -19,12 +29,12 @@ describe("Text Game Store", function() {
 	});
 
 	it('adds, gets and removes a game', function(done) {
-		gameStore.addGame({id:0,title:gameTitle,model:sampleModel}, function(id){
-			assert(id !== undefined, "addGame: invalid id returned: " + id);
+		gameStore.addGame(sampleGame, function(id){
+			assert.equal(id, sampleId, "getGame: incorrect id. Expected '" + sampleId + "', got '" + id + "'");
 			
 			gameStore.getGame(id, true, function(game){
 				assert.equal(game.id, id, "getGame: incorrect id. Expected '" + id + "', got '" + game.id + "'");
-				assert.equal(game.title, gameTitle, "getGame: incorrect title. Expected '" + gameTitle + "', got '" + game.title + "'");
+				assert.equal(game.title, sampleTitle, "getGame: incorrect title. Expected '" + sampleTitle + "', got '" + game.title + "'");
 				assert.deepEqual(game.model.some, "stuff", "getGame: incorrect model contents.\nExpected: " + sampleModel + "\nActual: " + game.model);
 				
 				gameStore.removeGame(id, function(changes) {
@@ -34,31 +44,28 @@ describe("Text Game Store", function() {
 			});
 		});
 	});
-/*
+
 	it('updates a game in the database', function(done) {
+		var updatedTitle = "Updated Title";
+		var updatedModel = {some:"Updated some field", goes:"Updated goes field"};
+		var updatedGame = {id:sampleId, title:updatedTitle, model:updatedModel};
 
-		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
+		gameStore.addGame(sampleGame, function(id){
 
-		gameStore.addGame({id:0,title:"hello",model:sampleModel}, function(id){
-			gameStore.updateGame({id:1,title:"helloagain",model:sampleModel}, id, function(changes){
+			gameStore.updateGame(updatedGame, function(changes){
+				assert.equal(changes, 1, "updateGame: Expected 1 change, got " + changes);
+console.log(id);
+				gameStore.getGame(id, true, function(game){
+					assert.equal(game.id, sampleId, "getGame: incorrect id");
+					assert.equal(game.title, updatedTitle, "getGame: incorrect title");
+					assert.deepEqual(game.model, updatedModel, "getGame: incorrect model");
 
-				assert.equal(changes, 1);
-
-				gameStore.getGame(id, function(game){
-
-					assert.equal(game.id, 1);
-					assert.equal(game.title, "helloagain");
-					gameStore.removeGame(id, function(){
-						gameStore.close();
-						done();
-					});
-
+					done();
 				});
-
 			});
 		});
 	});
-
+/*
 	it('adds a checkpoint', function(done) {
 
 		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
