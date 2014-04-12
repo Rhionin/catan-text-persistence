@@ -4,13 +4,21 @@ var fs = require('fs');
 var _ = require('underscore');
 
 describe("Text User Store", function() {
+	var name = "TestUser";
+	var password = "Password";
+	var userFilePath = "./test/tmp_users.json";
+	var userStore;
+
+	beforeEach(function(done) {
+		userStore = new TextUserStore.TextUserStore(userFilePath);
+		done();
+	});
+
+	afterEach(function(done) {
+		fs.unlink(userFilePath, done);
+	});
 
 	it('Add/Get/Delete a user', function(done) {
-
-		var userStore = new TextUserStore.TextUserStore();
-		var name = "TestUser";
-		var password = "Password";
-
 		userStore.addUser(name, password, function(id){
 			userStore.getUserByName(name, function(user){
 
