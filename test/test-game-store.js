@@ -39,7 +39,11 @@ describe("Text Game Store", function() {
 				
 				gameStore.removeGame(id, function(changes) {
 					assert.equal(changes, 1, "removeGame: Expected 1 change, got " + changes);
-					done();
+
+					gameStore.getGame(id, true, function(result){
+						assert.equal(result, null, "Game not removed from gameList");
+						done();
+					});
 				});
 			});
 		});
