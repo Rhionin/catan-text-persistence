@@ -25,18 +25,23 @@ describe("Text Game Store", function() {
 	});
 
 	afterEach(function(done) {
-		fs.unlink(gameFilePath, done);
+		dumpFilePath = './test/last_test_games.json';
+		if(fs.existsSync(dumpFilePath))
+		{
+			fs.unlinkSync(dumpFilePath, done);
+		}
+		fs.renameSync(gameFilePath, dumpFilePath);
+
+		done();
 	});
 
 	it('adds, gets and removes a game', function(done) {
 		gameStore.addGame(sampleGame, function(id){
 			assert.equal(id, sampleId, "getGame: incorrect id. Expected '" + sampleId + "', got '" + id + "'");
-			
 			gameStore.getGame(id, true, function(game){
 				assert.equal(game.id, id, "getGame: incorrect id. Expected '" + id + "', got '" + game.id + "'");
 				assert.equal(game.title, sampleTitle, "getGame: incorrect title. Expected '" + sampleTitle + "', got '" + game.title + "'");
 				assert.deepEqual(game.model.some, "stuff", "getGame: incorrect model contents.\nExpected: " + sampleModel + "\nActual: " + game.model);
-				
 				gameStore.removeGame(id, function(changes) {
 					assert.equal(changes, 1, "removeGame: Expected 1 change, got " + changes);
 
@@ -69,39 +74,21 @@ describe("Text Game Store", function() {
 			});
 		});
 	});
-/*
-	it('adds a checkpoint', function(done) {
 
-		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
+	it('add / get a checkpoint', function(done) {
+		var checkpointModel = {some:"stuff checkpoint 1", goes:"here checkpoint 1"};
+		var checkpointGame = {id:sampleId, title:sampleTitle, model:checkpointModel}; 
 
-		gameStore.addGame({id:0,title:"hello",model:sampleModel}, function(id){
-			gameStore.addCheckpoint(id, {id:0,title:"checkpoint1",model:sampleModel}, function(checkpointId){
+		gameStore.addGame(sampleGame, function(id){
 
+			gameStore.addCheckpoint(id, checkpointGame, function(checkpointId){
 				assert.equal(typeof checkpointId, "number");
 
-				gameStore.removeGame(id, function(){
-					gameStore.close();
-					done();	
-				});
-			});
-		});
-
-	});
-
-	it('gets a checkpoint', function(done) {
-
-		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
-
-		gameStore.addGame({id:0,title:"hello",model:sampleModel}, function(id){
-			gameStore.addCheckpoint(id, {id:0,title:"checkpoint1",model:sampleModel}, function(checkid){
-				gameStore.addCheckpoint(id, {id:0,title:"checkpoint2",model:sampleModel}, function(checkid2){
-					gameStore.getCheckpoint(id, function(checkpoint){
-						assert.equal(checkpoint.title, "checkpoint2");
-						gameStore.removeGame(id, function(){
-							gameStore.close();
-							done();	
-						});
-					});
+				gameStore.getGame(id, false, function(game) {
+					assert.deepEqual(game, checkpointGame, "getGame (checkpoint): games don't match" +
+						"\nExpected: " + JSON.stringify(checkpointGame) +
+						"\nActual: " + JSON.stringify(game));
+					done();
 				});
 			});
 		});
@@ -110,24 +97,22 @@ describe("Text Game Store", function() {
 
 	it('initializes with no games', function(done) {
 
-		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
-		gameStore.setLogging(false);
+		var gameStore = new TextGameStore.TextGameStore();
 
-		gameStore.initialize(function(models){
+		gameStore.initialize(function(games){
 
-			assert.equal(models.length, 0);
-			gameStore.close();
+			assert.equal(games.length, 0);
 			done();
 		});
 
 	});
-
+/*
 	it('initializes with games', function(done) {
 
 		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
 		gameStore.setLogging(false);
 
-		gameStore.addGame({id:0,title:"Game1",model:sampleModel}, function(id){
+		gameStore.addGame(sampleGame, function(id){
 
 			var id1 = id;
 
