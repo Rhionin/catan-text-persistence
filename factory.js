@@ -31,8 +31,10 @@ var commandStore = new commands.TextCommandStore();
 var gameStore = new game.TextGameStore();
 var userStore = new user.TextUserStore();
 
+var dataFolder = path.resolve(__dirname + '/data');
+
 _.extend(exports, {
-	dataFolder: path.resolve('./data'),
+	dataFolder: dataFolder,
 
 	/**
 	 * [returns an instance of the text persistence command DAO]
@@ -104,7 +106,7 @@ _.extend(exports, {
 	 */
  	clean: function(done)
 	{
-		rmdir(exports.dataFolder, function(err) {
+		rmdir(dataFolder, function(err) {
 			if(err)
 			{
 				console.log(err);
@@ -112,7 +114,7 @@ _.extend(exports, {
 			else
 			{
 				console.log("Persistent text data cleared");
-				fs.mkdir(exports.dataFolder);
+				fs.mkdir(dataFolder);
 			}
 
 			done();
