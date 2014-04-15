@@ -106,35 +106,29 @@ describe("Text Game Store", function() {
 		});
 
 	});
-/*
+
 	it('initializes with games', function(done) {
 
-		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
-		gameStore.setLogging(false);
+		var gameStore = new TextGameStore.TextGameStore();
+		var secondTitle = "Game2";
 
 		gameStore.addGame(sampleGame, function(id){
 
 			var id1 = id;
 
-			gameStore.addGame({id:1,title:"Game2",model:sampleModel}, function(id){
+			gameStore.addGame({id:1, title:secondTitle, model:sampleModel}, function(id){
 
 				var id2 = id;
 
-				gameStore.initialize(function(models){
+				gameStore.initialize(function(games){
 
-					assert.equal(models.length, 2);
-					assert.equal(models[0].title, "Game1");
-					assert.equal(models[1].title, "Game2");
+					assert.equal(games.length, 2);
+					assert.equal(games[0].title, sampleTitle);
+					assert.equal(games[1].title, secondTitle);
 
-					gameStore.removeGame(id1, function(){
-						gameStore.removeGame(id2, function(){
-							gameStore.close();
-							done();
-						});
-					});
-
+					done();
 				});
 			});
 		});
-	});*/
+	});
 });
