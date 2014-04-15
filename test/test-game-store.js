@@ -94,21 +94,19 @@ describe("Text Game Store", function() {
 		});
 
 	});
-/*
+
 	it('initializes with no games', function(done) {
 
-		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
-		gameStore.setLogging(false);
+		var gameStore = new TextGameStore.TextGameStore();
 
-		gameStore.initialize(function(models){
+		gameStore.initialize(function(games){
 
-			assert.equal(models.length, 0);
-			gameStore.close();
+			assert.equal(games.length, 0);
 			done();
 		});
 
 	});
-
+/*
 	it('initializes with games', function(done) {
 
 		var gameStore = new TextGameStore.TextGameStore(database, tableName, checkpointTable);
